@@ -1,0 +1,17 @@
+class Solution {
+    public int findMiddleIndex(int[] nums) {
+        int suffixSum = 0;
+        for(int i=0;i<nums.length;i++){
+            suffixSum+=nums[i];
+        }
+        int prefixSum = 0;
+        for(int i=0;i<nums.length;i++){
+            suffixSum-=nums[i];
+            if(prefixSum == suffixSum){
+                return i;
+            }
+            prefixSum+=nums[i];
+        }
+        return -1;
+    }
+}
