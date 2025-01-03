@@ -1,0 +1,34 @@
+class Solution {
+    public int waysToSplitArray(int[] nums) {
+        // Step 1: Initialize the suffix sum to calculate the total sum of the array.
+        // This will help us efficiently compute the sum of the right subarray for each split.
+        long suffixSum = 0;  
+        for (int i = 0; i < nums.length; i++) {
+            suffixSum += nums[i];  // Calculate the total sum of all elements in nums.
+        }
+
+        // Step 2: Initialize prefixSum to 0. This will store the sum of elements
+        // from the beginning of the array up to the current index.
+        long prefixSum = 0;
+
+        // Step 3: Initialize a variable to count the number of valid splits.
+        int ans = 0;
+
+        // Step 4: Loop through the array to evaluate splits at each index.
+        // We stop at nums.length - 1 because there must be at least one element in the right subarray.
+        for (int i = 0; i < nums.length - 1; i++) {
+            prefixSum += nums[i];    // Add the current element to the prefix sum.
+            suffixSum -= nums[i];    // Subtract the current element from the suffix sum.
+
+            // Step 5: Check if the split at index i satisfies the condition:
+            // The sum of the left subarray (prefixSum) must be greater than or equal
+            // to the sum of the right subarray (suffixSum).
+            if (prefixSum >= suffixSum) {
+                ans++;  // If the condition is met, increment the count of valid splits.
+            }
+        }
+
+        // Step 6: Return the total count of valid splits.
+        return ans;
+    }
+}
