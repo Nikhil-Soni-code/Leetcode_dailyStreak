@@ -1,0 +1,38 @@
+class Solution {
+    public int minIncrementForUnique(int[] nums) {
+        int max = -1;
+        for(int i=0;i<nums.length;i++){
+            max = Math.max(max,nums[i]);
+        }
+        int[]hash = new int[max+1+nums.length];
+        for(int i=0;i<nums.length;i++){
+            hash[nums[i]]++;
+        }
+        int ans=0;
+        for(int i=0;i<hash.length-1;i++){
+            if(hash[i]<=1)continue;
+            hash[i+1]+=hash[i]-1;
+            ans+=hash[i]-1;
+            hash[i]=1;
+        }
+        if(hash[max]>1){
+            ans+=hash[max]-1;
+        }
+        return ans;
+
+    }
+}
+////////////////////////////////////--OR--////////////////////////////////////////
+class Solution {
+    public int minIncrementForUnique(int[] nums) {
+        Arrays.sort(nums);
+        int ans=0;
+        for(int i=1;i<nums.length;i++){
+            if(nums[i]<=nums[i-1]){
+                ans+=nums[i-1]-nums[i]+1;
+                nums[i]=nums[i-1]+1;
+            }
+        }
+        return ans;
+    }
+}
