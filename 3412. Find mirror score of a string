@@ -1,0 +1,32 @@
+class Solution {
+    public long calculateScore(String s) {
+        HashMap<Character,List<Integer>> map = new HashMap();
+        long ans = 0;
+        for(int i=0;i<s.length();i++){
+            char mirror = (char)(219-s.charAt(i));
+            if(map.containsKey(mirror)){
+                List<Integer> value = map.get(mirror);
+                ans=ans+i-value.get(value.size()-1);
+                value.remove(value.size()-1);
+                if(value.isEmpty()){
+                   map.remove(mirror);
+                }
+            }
+            else{
+                if(map.containsKey(s.charAt(i))){
+                    List<Integer> value = map.get(s.charAt(i));
+                    value.add(i);
+                    map.put(s.charAt(i),value);
+                }
+                else{
+                    List<Integer> value = new ArrayList();
+                    value.add(i);
+
+                    map.put(s.charAt(i),value);
+                }                
+            }
+        }
+        return ans;
+        
+    }
+}
