@@ -1,0 +1,27 @@
+class Solution {
+    public String shiftingLetters(String s, int[][] shifts) {
+        int[] a = new int[s.length()+1];
+        for(int i=0;i<shifts.length;i++){
+            if(shifts[i][2]==0){
+                a[shifts[i][0]]-=1;
+                a[shifts[i][1]+1]+=1;
+            }
+            else{
+                                a[shifts[i][0]]+=1;
+                a[shifts[i][1]+1]-=1;
+            }
+        }
+        int sum = 0;
+        for(int i=0;i<a.length;i++){
+            sum+=a[i];
+            a[i] = sum;
+        }
+        StringBuilder sbr = new StringBuilder();
+        for(int i=0;i<s.length();i++){
+            int shift = ((a[i])%26+26)%26;
+                sbr.append((char)((s.charAt(i)-'a'+shift)%26+'a'));
+            
+        }
+        return sbr.toString();
+    }
+}
