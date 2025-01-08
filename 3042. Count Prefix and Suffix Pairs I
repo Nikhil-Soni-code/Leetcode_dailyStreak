@@ -1,0 +1,17 @@
+class Solution {
+    private boolean isPrefixOrSuffix(String a,String b){
+        return b.indexOf(a)==0 && b.substring(b.length()-a.length(),b.length()).equals(a);
+    }
+    public int countPrefixSuffixPairs(String[] words) {
+        int ans = 0;
+        int count = 0;
+        for(int i=0;i<words.length;i++){
+            for(int j=i+1;j<words.length;j++){
+                if(isPrefixOrSuffix(words[i],words[j])){
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+}
