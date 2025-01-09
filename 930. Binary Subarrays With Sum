@@ -1,0 +1,25 @@
+class Solution {
+    private int generate(int[] nums,int goal){
+        int i=0,j=0;
+        int ans = 0;
+        int sum = 0;
+        for(j=0;j<nums.length;j++){
+            sum+=nums[j];
+            if(sum<=goal){
+                ans+=j-i+1;
+            }
+            while(i<j&&sum>goal){
+                sum-=nums[i];
+                i++;
+                if(sum<=goal){
+                    ans+=j-i+1;
+                }
+
+            }
+        }
+        return ans;
+    }
+    public int numSubarraysWithSum(int[] nums, int goal) {
+        return generate(nums,goal)-generate(nums,goal-1);
+    }
+}
