@@ -1,0 +1,24 @@
+class Solution {
+    private int count(int[] nums,int k){
+        int i=0,j=0;
+        int oddCount = 0;
+        int ans=0;
+        for(j=0;j<nums.length;j++){
+            if(nums[j]%2==1){
+                oddCount++;
+            }
+
+            while(i<j&&oddCount>k){
+                if(nums[i]%2==1)oddCount--;
+                i++;
+            }
+            if(oddCount<=k){
+                ans+=j-i+1;
+            }
+        }
+        return ans;
+    }
+    public int numberOfSubarrays(int[] nums, int k) {
+        return count(nums,k)-count(nums,k-1);
+    }
+}
