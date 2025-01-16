@@ -1,0 +1,23 @@
+class Solution {
+    private int xor(int[] nums){
+        int xor =0;
+        for(int i=0;i<nums.length;i++){
+            xor^=nums[i];
+        }
+        return xor;
+    }
+    public int xorAllNums(int[] nums1, int[] nums2) {
+        if(nums1.length%2==0 && nums2.length%2==0){
+            return 0;
+        }
+        else if(nums1.length%2==1&&nums2.length%2==0){
+            return xor(nums2);
+        }
+        else if(nums1.length%2==0&&nums2.length%2==1){
+            return xor(nums1);
+        }
+        else{
+            return xor(nums1)^xor(nums2);
+        }
+    }
+}
