@@ -1,0 +1,36 @@
+class Pair{
+    int val1;
+    int val2;
+    public Pair(int val1,int val2){
+        this.val1 = val1;
+        this.val2 = val2;
+    }
+}
+class Solution {
+    public int firstCompleteIndex(int[] arr, int[][] mat) {
+        HashMap<Integer,Pair> map = new HashMap();
+        int rowLength = mat.length;
+        int colLength = mat[0].length;
+        for(int i=0;i<rowLength;i++){
+            for(int j=0;j<colLength;j++){
+                
+                map.put(mat[i][j], new Pair(i,j));
+            }
+        }
+        int[] rowFreq = new int[rowLength];
+        int[] colFreq = new int[colLength];
+
+        for(int i=0;i<arr.length;i++){
+            int row = map.get(arr[i]).val1;
+            int col = map.get(arr[i]).val2;
+            rowFreq[row]++;
+            colFreq[col]++;
+
+            if(rowFreq[row]==colLength||colFreq[col]==rowLength){
+                return i;
+            }
+        }
+        return -1;
+
+    }
+}
