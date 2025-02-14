@@ -14,7 +14,7 @@ class ProductOfNumbers {
             length = 0;
         }
         else{
-            if(length>0){
+            if(n>0 && list.get(n-1)!=0){//length>0
                 list.add(num*list.get(n-1));
             }
             else{
