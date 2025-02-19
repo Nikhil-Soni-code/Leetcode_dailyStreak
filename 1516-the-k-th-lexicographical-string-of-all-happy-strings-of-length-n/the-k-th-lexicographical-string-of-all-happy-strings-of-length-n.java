@@ -1,24 +1,26 @@
 class Solution {
     int count = 0;
-    String ans ="";
-    private void create(StringBuilder sbr,int n,int k){
+    private String create(StringBuilder sbr,int n,int k){
         if(sbr.length()==n){
             count++;
             if(count==k){
-                ans = sbr.toString();
+                return sbr.toString();
             }
-            return;
+            return "";
         }
-        for(char ch : "abc".toCharArray()){
+        for(Character ch : "abc".toCharArray()){
             if(sbr.length()==0||sbr.charAt(sbr.length()-1)!=ch){
                 sbr.append(ch);
-                create(sbr,n,k);
+                String ans = create(sbr,n,k);
+                if(ans!=""){
+                    return ans;
+                }
                 sbr.deleteCharAt(sbr.length()-1);
             }
         }
+        return "";
     }
     public String getHappyString(int n, int k) {
-        create(new StringBuilder(),n,k);
-        return ans;
+        return create(new StringBuilder(),n,k);
     }
 }
