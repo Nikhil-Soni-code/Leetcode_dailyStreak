@@ -26,17 +26,14 @@ class Solution {
         int rn = findDepth(root.right,node,depth+1);
         return rn;
 
-
-
-
     }
     public boolean isCousins(TreeNode root, int x, int y) {
         int depth1 = findDepth(root,x,0);
         int depth2 = findDepth(root,y,0);
-        return depth1==depth2&&!isSiblings(root,x,y);
+        return depth1==depth2&&!isSiblings(root,x,y);//same leve l&& not real siblings
     }
     private boolean isSiblings(TreeNode root,int x,int y){
-        if(root==null||(root.left==null&&root.right==null)){
+        if(root==null){
             return false;
         }
         if(root.left!=null&&root.right!=null&&(root.left.val==x&&root.right.val==y||root.left.val==y&&root.right.val==x)){
