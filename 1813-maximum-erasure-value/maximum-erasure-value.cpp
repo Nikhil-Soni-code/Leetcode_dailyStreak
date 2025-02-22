@@ -14,12 +14,11 @@ public:
                 end++;
             }
             else{
-                if(start<end){
                     ans.erase(nums[start]);
                     sum=sum-nums[start];
                     start=start+1;
-                }
-            }
+             }
+            
         }
         return maxsum;
     }
