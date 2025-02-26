@@ -1,8 +1,7 @@
 class Solution {
     public int maxAbsoluteSum(int[] nums) {
         int maxSum1 = 0;
-        
-        
+    
         int currSum = 0;
         for(int i=0;i<nums.length;i++){
             currSum+=nums[i];
@@ -11,16 +10,16 @@ class Solution {
                 currSum=0;
             }
         }
-        int maxSum2 = 0;
+        int minSum = 0;
         currSum=0;
 
         for(int i=0;i<nums.length;i++){
             currSum+=nums[i];
-            maxSum2 = Math.max(maxSum2,Math.abs(currSum));
+            minSum = Math.min(minSum,currSum);
             if(currSum>0){
                 currSum=0;
             }
         }
-        return (maxSum1>maxSum2)?maxSum1:maxSum2;
+        return (maxSum1>Math.abs(minSum))?maxSum1:Math.abs(minSum);
     }
 }
