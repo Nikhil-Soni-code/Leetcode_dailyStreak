@@ -29,6 +29,7 @@ class Solution {
         }
         if(currentCount>maxCount){
             maxCount = currentCount;
+            // list = new ArrayList();
             list.clear();
             list.add(current);
         }
