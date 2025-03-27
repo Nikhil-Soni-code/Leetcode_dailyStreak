@@ -14,46 +14,33 @@
  * }
  */
 class Solution {
-    private void delete(TreeNode root,int key){
-        if(root==null){
-            return;
-        }
-        if(root.val>key){
-            if(root.left!=null&&root.left.val==key){
-                root.left = helper(root.left);
-                return;
-            }else{
-                delete(root.left,key);
-            }
-        }else{
-            if(root.right!=null&&root.right.val==key){
-                root.right = helper(root.right);
-                return;
-            }else{
-                delete(root.right,key);
-            }
-        }
-    }
-    private TreeNode helper(TreeNode root){
-        if(root.right==null)return root.left;
-        else if(root.left==null)return root.right;
-        TreeNode rightNode = root.right;
-        TreeNode leftNode = root.left;
-        TreeNode lastRightNode = findLastRightNode(rightNode);
-        lastRightNode.left = leftNode;
-        return rightNode;
-    }
-    private TreeNode findLastRightNode(TreeNode root){
-        while(root.left!=null){
-            root = root.left;
-        }return root;
-    }
-    public TreeNode deleteNode(TreeNode root, int key) {
-        if(root==null)return root;
+    private TreeNode delete(TreeNode root,int key){
+        if(root==null)return null;
         if(root.val == key){
             return helper(root);
         }
-        delete(root,key);
+        root.left = delete(root.left,key);
+        root.right = delete(root.right,key);
+
         return root;
+    }
+    private TreeNode helper(TreeNode root){
+        if(root.right == null){
+            return root.left;
+        }
+        if(root.left == null){
+            return root.right;
+        }
+        TreeNode leftNode = root.left;
+        TreeNode rightNode = root.right;//newRoot
+        TreeNode temp = rightNode;
+        while(temp.left!=null){
+            temp = temp.left;
+        }
+        temp.left = leftNode;
+        return rightNode;
+    }
+    public TreeNode deleteNode(TreeNode root, int key) {
+        return delete(root,key);
     }
 }
