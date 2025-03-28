@@ -15,21 +15,22 @@
  */
 class Solution {
     int idx = 0;
-    private TreeNode bst(int min,int []preorder,int max){
-        if(idx==preorder.length)return null;
-        TreeNode node;
-        if(min<preorder[idx]&&preorder[idx]<max){
-            node = new TreeNode(preorder[idx++]);
-        }else{
-            node = null;
-            return node;
+    private TreeNode construct(int[] preorder,int min,int max){
+        if(idx==preorder.length){
+            return null;
         }
-        node.left = bst(min,preorder,node.val);
-        node.right = bst(node.val,preorder,max);
-        return node;
+        TreeNode root = null;
+        if(preorder[idx]<max&&min<preorder[idx]){
+            root = new TreeNode(preorder[idx++]);
+        }else{
+            return root;
+        }
+        root.left = construct(preorder,min,root.val);
+        root.right = construct(preorder,root.val,max);
+        return root;
 
     }
     public TreeNode bstFromPreorder(int[] preorder) {
-        return bst(Integer.MIN_VALUE,preorder,Integer.MAX_VALUE);
+        return construct(preorder,Integer.MIN_VALUE,Integer.MAX_VALUE);
     }
 }
