@@ -8,50 +8,63 @@
  *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
  * }
  */
+
 class Solution {
     public int[][] spiralMatrix(int m, int n, ListNode head) {
         int[][] mat = new int[m][n];
-        for(int i=0;i<m;i++){
-            for(int j=0;j<n;j++){
+
+        // Initialize all cells with -1
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
                 mat[i][j] = -1;
             }
         }
+
         ListNode temp = head;
-        int row_i=-1;
-        int col_i=-1;
-        int i=0,j=0;
-        while(temp!=null){
-            while(j<n&&temp!=null){
+
+        // Track boundaries for spiral traversal
+        int rowStart = -1, colStart = -1;
+        int i = 0, j = 0;
+
+        while (temp != null) {
+            // Traverse right
+            while (j < n && temp != null) {
                 mat[i][j] = temp.val;
                 temp = temp.next;
                 j++;
             }
             j--;
-            row_i = i;
+            rowStart = i;
             i++;
-            while(i<m&&temp!=null){
+
+            // Traverse down
+            while (i < m && temp != null) {
                 mat[i][j] = temp.val;
                 temp = temp.next;
                 i++;
             }
             i--;
-            n--;
+            n--; // Right boundary moves left
             j--;
-            while(j>col_i&&temp!=null){
+
+            // Traverse left
+            while (j > colStart && temp != null) {
                 mat[i][j] = temp.val;
                 temp = temp.next;
                 j--;
             }
             j++;
             i--;
-            m--;
-            while(i>row_i&&temp!=null){
-                                mat[i][j] = temp.val;
+            m--; // Bottom boundary moves up
+
+            // Traverse up
+            while (i > rowStart && temp != null) {
+                mat[i][j] = temp.val;
                 temp = temp.next;
                 i--;
             }
             i++;
-            col_i = j;
+            colStart = j;
             j++;
         }
 
