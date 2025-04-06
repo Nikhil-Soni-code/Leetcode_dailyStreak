@@ -1,30 +1,26 @@
 class Solution {
-    public void subSet(List<List> list,List subset,int []nums,int i){
+    int xor = 0;
+    public void subSet(List subset,int []nums,int i){
         if(i==nums.length){
-            list.add(new ArrayList(subset));
+            xor+=findXor(subset);
             return;
         }
         subset.add(nums[i]);
-        subSet(list,subset,nums,i+1);
+        subSet(subset,nums,i+1);
         subset.remove(subset.size()-1);
-        subSet(list,subset,nums,i+1);
+        subSet(subset,nums,i+1);
 
     }
-    public int subsetXORSum(int[] nums) {
-        List<List> list = new ArrayList();
-        subSet(list,new ArrayList(),nums,0);
-        
-
-        int sum=0;
-        for(List l : list){
-            int xor=0;
-            for(int j=0;j<l.size();j++){
-                xor=xor^(int)l.get(j);
-                System.out.println(xor);
-            }
-            sum=sum+xor;
+    private int findXor(List<Integer> subset){
+        int xor = 0;
+        for(Integer i:subset){
+            xor^=i;
         }
-        return sum;
+        return xor;
+    }
+    public int subsetXORSum(int[] nums) {
+        subSet(new ArrayList(),nums,0);
+        return xor;
     }
     
 }
