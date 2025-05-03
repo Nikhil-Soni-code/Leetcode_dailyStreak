@@ -1,6 +1,7 @@
 class Solution {
     private boolean isPrime(int num){
-        if(num==1){
+        if(num==2||num==3||num==5)return true;
+        if(num==1||num%2==0||num%3==0||num%5==0){
             return false;
         }
         for(int i=2;i*i<=num;i++){
@@ -33,13 +34,6 @@ class Solution {
                 }
             }
         }  
-        // if(min1==Integer.MIN_VALUE){
-        //     min1 = -1;
-        // }
-        
-        // if(min2==Integer.MAX_VALUE){
-        //     min2 = -1;
-        // }
         if(min1==-1||min2==-1)return new int[]{min1,min2};
         return new int[]{min1,min2};
 
