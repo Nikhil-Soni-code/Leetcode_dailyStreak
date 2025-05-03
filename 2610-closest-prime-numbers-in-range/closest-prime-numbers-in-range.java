@@ -1,6 +1,5 @@
 class Solution {
     private void markPrimes(int[] mark){
-        Arrays.fill(mark,0);
         int n = mark.length;
         mark[0] = -1;
         mark[1] = -1;
