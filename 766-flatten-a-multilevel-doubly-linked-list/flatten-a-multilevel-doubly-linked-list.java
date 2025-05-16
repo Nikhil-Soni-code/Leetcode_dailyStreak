@@ -9,29 +9,32 @@ class Node {
 */
 
 class Solution {
-    private Node flatDLL(Node head){
-        Node curr = head;
-        while(curr!=null){
-            if(curr.child!=null){
-                Node next = curr.next;
-                curr.next = flatDLL(curr.child);
-                curr.next.prev = curr;
-                curr.child = null;
-                while(curr.next!=null){
-                    curr = curr.next;
-                }
-                
-                curr.next = next;
-                if(next!=null)
-                next.prev = curr;
+    public Node flatten(Node head) {
+        if(head==null){
+            return null;
+        }
+        Node nextNode = flatten(head.next);
+        Node childNode = flatten(head.child);
+        head.child = null;
+        if(childNode!=null){
+            head.next = childNode;
+            childNode.prev = head;
+            Node tail = findTail(childNode);
+            if (nextNode != null) {
+                tail.next = nextNode;
+                nextNode.prev = tail;
             }
-            curr = curr.next;
+
+        }else{
+            head.next = nextNode;
+            if(nextNode!=null)
+            nextNode.prev = head;
         }
         return head;
     }
-    public Node flatten(Node head) {
-        return flatDLL(head);
-
-
+    private Node findTail(Node node){
+        while(node.next!=null){
+            node = node.next;
+        }return node;
     }
 }
