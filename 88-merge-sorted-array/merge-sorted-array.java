@@ -6,7 +6,7 @@ class Solution {
         }
         int i = m-1,j = n-1;
 
-        int idx = m+n-1;
+        int idx = nums1.length-1;
         while(i>=0&&j>=0){
             if(nums1[i]>nums2[j]){
                 nums1[idx--] = nums1[i--];
