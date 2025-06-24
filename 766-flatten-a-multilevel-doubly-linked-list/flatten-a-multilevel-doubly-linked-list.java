@@ -13,28 +13,27 @@ class Solution {
         if(head==null){
             return null;
         }
-        Node nextNode = flatten(head.next);
-        Node childNode = flatten(head.child);
-        head.child = null;
-        if(childNode!=null){
-            head.next = childNode;
-            childNode.prev = head;
-            Node tail = findTail(childNode);
-            if (nextNode != null) {
-                tail.next = nextNode;
-                nextNode.prev = tail;
+        Node bottomHead = flatten(head.child);
+        Node nextHead = flatten(head.next);
+        if(bottomHead!=null){
+            head.next = bottomHead;
+            bottomHead.prev = head;
+            head.child = null;
+            Node tail = bottomHead;
+            while(tail.next!=null){
+                tail = tail.next;
             }
+            tail.next = nextHead;
+            if(nextHead!=null){
 
+            nextHead.prev = tail;}
         }else{
-            head.next = nextNode;
-            if(nextNode!=null)
-            nextNode.prev = head;
+            head.next = nextHead;
+            if(nextHead!=null){
+            nextHead.prev = head;
+
+            }
         }
         return head;
-    }
-    private Node findTail(Node node){
-        while(node.next!=null){
-            node = node.next;
-        }return node;
     }
 }
