@@ -1,4 +1,6 @@
 class Solution {
+    // tc-> N
+    // sc-> 1
     public int rob(int[] nums) {
         int n = nums.length;
         if(n==1){
@@ -17,9 +19,14 @@ class Solution {
         return prev;
     }
 }
-// class Solution {
+
+// __________________________________________________________________________
+
+
 //     // tc-> N
 //     // sc-> N
+// class Solution {
+
 //     public int rob(int[] nums) {
 //         int n = nums.length;
 //         int[]dp = new int[n];
@@ -41,9 +48,14 @@ class Solution {
 
 //     }
 // }
-// class Solution {
+
+// __________________________________________________________________________
+
+
 //     // tc-> n
 //     // sc-> n+n
+// class Solution {
+
 //     private int rob(int[] nums,int n,int[] dp){
 //         if(n<0)return 0;
 //         if(dp[n]!=-1)return dp[n];
@@ -60,9 +72,13 @@ class Solution {
 //         return rob(nums,n,dp);
 //     }
 // }
-// class Solution {
+
+// __________________________________________________________________________
+
 //     //tc -> 2^n
 //     //sc -> n
+// class Solution {
+
 //     private int rob(int[] nums,int n){
 //         if(n<0)return 0;
 //         int notLooted = 0+rob(nums,n-1);
