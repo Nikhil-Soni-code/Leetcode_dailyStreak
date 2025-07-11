@@ -7,7 +7,8 @@ class Solution {
             return dp[i1][i2];
         }
         if(text1.charAt(i1)==text2.charAt(i2)){
-            return 1+count(text1,text2,i1-1,i2-1,dp);
+            dp[i1][i2] = 1+count(text1,text2,i1-1,i2-1,dp);
+            return dp[i1][i2];
         }
         dp[i1][i2] = Math.max(count(text1,text2,i1-1,i2,dp),count(text1,text2,i1,i2-1,dp));
         return dp[i1][i2];
