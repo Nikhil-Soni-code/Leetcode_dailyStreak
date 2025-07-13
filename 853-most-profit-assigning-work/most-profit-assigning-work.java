@@ -1,29 +1,26 @@
-class Pair{
-    int d;
-    int p;
-    public Pair(int d,int p){
-        this.d = d;
-        this.p = p;
-    }
-}
 class Solution {
     public int maxProfitAssignment(int[] difficulty, int[] profit, int[] worker) {
-        Pair[] pair = new Pair[difficulty.length];
+        int maxDiff = 0;
         for(int i=0;i<difficulty.length;i++){
-            pair[i] = new Pair(difficulty[i],profit[i]);
+            maxDiff = Math.max(maxDiff,difficulty[i]);
         }
-        Arrays.sort(pair,(a,b)-> a.d-b.d);
-        Arrays.sort(worker);
-        int totalProfit = 0;
+        int maxPot = 0;
         for(int i=0;i<worker.length;i++){
-            int j=0;
-            int max = 0;
-            while(j<pair.length&&pair[j].d<=worker[i]){
-                max = Math.max(max,pair[j].p);j++;
-            }
-            totalProfit+=max;
+            maxPot = Math.max(maxPot,worker[i]);
         }
-        return totalProfit;
+        int[] bucket = new int[Math.max(maxPot,maxDiff)+1];
+        for(int i=0;i<difficulty.length;i++){
+            bucket[difficulty[i]] = Math.max(bucket[difficulty[i]],profit[i]);
+        }
+        int maxProfit = 0;
+        for(int i=0;i<bucket.length;i++){
+            maxProfit = Math.max(maxProfit,bucket[i]);
+            bucket[i] = Math.max(bucket[i],maxProfit);
+        }
+        int netProfit = 0;
+        for(int i=0;i<worker.length;i++){
+            netProfit+=bucket[worker[i]];
+        }return netProfit;
 
     }
 }
