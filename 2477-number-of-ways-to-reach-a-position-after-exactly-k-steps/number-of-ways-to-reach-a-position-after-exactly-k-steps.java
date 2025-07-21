@@ -12,7 +12,7 @@ class Solution {
         return dp[k][curr+1000];
     }
     public int numberOfWays(int startPos, int endPos, int k) {
-        int[][]dp = new int[k+1][3001];
+        int[][]dp = new int[k+1][3000];
         for(int[]a:dp)Arrays.fill(a,-1);
         return count(startPos,endPos,k,startPos,dp);
     }
