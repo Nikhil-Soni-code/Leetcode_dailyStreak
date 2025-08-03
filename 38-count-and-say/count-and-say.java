@@ -1,28 +1,27 @@
 class Solution {
-    private String count(String str){
-        char curr = str.charAt(0);
-        int count = 0;
-        StringBuilder countString = new StringBuilder();
-        for(int i=0;i<str.length();i++){
-            if(curr==str.charAt(i)){
+    private String convert(String s){
+        char ele = s.charAt(0);
+        int count = 1;
+        StringBuilder sbr = new StringBuilder();
+        for(int i=1;i<s.length();i++){
+            if(ele==s.charAt(i)){
                 count++;
             }
             else{
-                countString.append(count);
-                countString.append(curr);
-                curr = str.charAt(i);
+                sbr.append(count);
+                sbr.append(ele);
+                ele = s.charAt(i);
                 count = 1;
             }
         }
-        countString.append(count);
-        countString.append(curr);
-        return countString.toString();
+        sbr.append(count);
+        sbr.append(ele);
+        return sbr.toString();
     }
     public String countAndSay(int n) {
         if(n==1){
             return "1";
         }
-        String prev = countAndSay(n-1);
-        return count(prev);
+        return convert(countAndSay(n-1));
     }
 }
