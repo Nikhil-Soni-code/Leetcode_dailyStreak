@@ -9,31 +9,32 @@
  * }
  */
 class Solution {
-    private boolean isLengthK(ListNode head,int k){
-        int count = 0;
+    private int findLength(ListNode head){
+        int length = 0;
         while(head!=null){
-            head=head.next;count++;
-            if(count==k)return true;
-
-        }return false;
+            head = head.next;
+            length++;
+        }
+        return length;
     }
     public ListNode reverseKGroup(ListNode head, int k) {
-        boolean isLengthK = isLengthK(head,k);
-        if(!isLengthK||k==1)return head;
+        int length = findLength(head);
+        if(length<k||head==null||head.next==null)return head;
         ListNode prev = null;
         ListNode curr = head;
-        ListNode next = head.next;
-        int count = 0;
-        while(count<k){
+        ListNode next = curr.next;
+        int i=0;
+        while(i<k&&curr!=null){
             curr.next = prev;
             prev = curr;
             curr = next;
             if(next!=null){
                 next = next.next;
             }
-            count++;
+            i++;
         }
         head.next = reverseKGroup(curr,k);
-        return prev;        
+        return prev;
+
     }
 }
