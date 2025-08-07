@@ -1,31 +1,26 @@
 class Solution {
-    private int find(int[] nums,int i,int target,int sum,int[][] dp){
-        if(sum==target){
-            return 1;
+    private boolean check(int i,int[] nums,int target,Boolean[][] dp){
+        if(target==0){
+            return true;
         }
-        if(sum>target)return -1;
-        if(i==nums.length)return -1;
-        if(dp[i][sum]!=0)return dp[i][sum];
-
-        int pick = find(nums,i+1,target,sum+nums[i],dp);
-        if(pick==1){
-            dp[i][sum] = pick;
+        if(i<0||target<0){
+            return false;
         }
-        else{
-            int notPick = find(nums,i+1,target,sum,dp);
-            dp[i][sum] = notPick;
-        }
-
-        return dp[i][sum];
-
+        if(dp[i][target]!=null)return dp[i][target];
+        dp[i][target] = check(i-1,nums,target-nums[i],dp)||check(i-1,nums,target,dp);
+        return dp[i][target];
     }
     public boolean canPartition(int[] nums) {
-        int target = 0;
+        int sum = 0;
         for(int i=0;i<nums.length;i++){
-            target+=nums[i];
+            sum+=nums[i];
         }
-        if(target%2==1)return false;
-        int[][] dp = new int[nums.length][target/2];
-        return find(nums,0,target/2,0,dp)==1;
+        if(sum%2==1)return false;
+        int target = sum/2;
+        Boolean[][] dp = new Boolean[nums.length+1][target+1];
+        for(Boolean[]a:dp){
+            Arrays.fill(a,null);
+        }
+        return check(nums.length-1,nums,target,dp);
     }
 }
