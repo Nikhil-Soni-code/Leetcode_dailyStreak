@@ -1,19 +1,17 @@
 class Solution {
     public int majorityElement(int[] nums) {
-        int ans = nums[0];
         int count = 1;
+        int maxElement = nums[0];
         for(int i=1;i<nums.length;i++){
-            if(nums[i]==ans){
+            if(nums[i]==maxElement){
                 count++;
-            }
-            else{
+            }else{
                 count--;
-            }
-            if(count==0){
-                ans = nums[i];
+            }if(count==0){
                 count=1;
+                maxElement = nums[i];
             }
         }
-        return ans;
+        return maxElement;
     }
 }
