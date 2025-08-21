@@ -14,20 +14,28 @@
  * }
  */
 class Solution {
-    public void flatten(TreeNode root) {
-        TreeNode curr = root;
-        while(curr!=null){
-            if(curr.left!=null){
-                TreeNode prev = curr.left;
-                while(prev.right!=null){
-                    prev = prev.right;
-                }
-                prev.right=curr.right;
-                curr.right=curr.left;
-                curr.left=null;
-            }
-            curr = curr.right;
+    private TreeNode findLast(TreeNode node){
+        if(node==null)return node;
+        while(node.right!=null){
+            node = node.right;
+        }return node;
+    }
+    private TreeNode bst(TreeNode root){
+        if(root==null)return null;
+        TreeNode leftNode = bst(root.left);
+        TreeNode rightNode = bst(root.right);
+        TreeNode leftNodeEndPart = findLast(leftNode);
+        root.left = null;
+        if(leftNodeEndPart!=null){
+            leftNodeEndPart.right = rightNode;
+            root.right = leftNode;
+        }else{
+            root.right = rightNode;
         }
-
+        
+        return root;
+    }
+    public void flatten(TreeNode root) {
+        bst(root);
     }
 }
