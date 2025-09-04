@@ -1,21 +1,14 @@
 class Solution {
-    private boolean jump(int[] nums,int i,Boolean[] dp)
-    {
-        if(i==nums.length-1)return true;
-        if(i>nums.length)return false;
-        if(dp[i]!=null)return dp[i];
-
-        for(int idx=1;idx<=nums[i];idx++){
-            if(jump(nums,idx+i,dp)){
-                dp[i] = true;
-                return true;}
-        }
-        dp[i] = false;
-        return false;
-    }
     public boolean canJump(int[] nums) {
-        Boolean[] dp = new Boolean[nums.length];
-        Arrays.fill(dp,null);
-        return jump(nums,0,dp);
+        int farPoint = 0;
+        if(nums.length==1)return true;
+        for(int i=0;i<nums.length-1;i++){
+            
+            if(farPoint<i)return false;
+            farPoint = Math.max(farPoint,nums[i]+i);
+            if(farPoint>=nums.length-1)return true;
+        }return false;
+
+         
     }
 }
