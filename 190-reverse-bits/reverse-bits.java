@@ -1,16 +1,13 @@
-public class Solution {
-    // you need treat n as an unsigned value
+class Solution {
     public int reverseBits(int n) {
         int pow = 31;
         int ans = 0;
         while(n!=0){
-            int bit = n&1;
-            if(bit==1){
-                ans+=1<<pow;
+            if((n&1)==1){
+                ans = ans+(1<<pow);
             }
-            n = n>>1;//unsigned right shift.
             pow--;
-        }
-        return ans;
+            n = n>>1;
+        }return ans;
     }
 }
