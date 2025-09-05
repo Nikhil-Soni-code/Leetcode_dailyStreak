@@ -1,14 +1,16 @@
 class Solution {
-    private int build(String s, int i) {
+    private int build(String s, int i,int[] dp) {
         if (i == s.length()) return 0;
         int count = 0;
+        if(dp[i]!=-1)return dp[i];
         for (int idx = i; idx < s.length(); idx++) {
             if (isPalindrome(s.substring(i, idx + 1))) {
                 count++;  // only count this palindrome
             }
         }
         // continue checking from next index
-        return count + build(s, i + 1);
+        dp[i] = count + build(s, i + 1,dp);
+        return dp[i];
     }
 
     private boolean isPalindrome(String s) {
@@ -22,6 +24,8 @@ class Solution {
     }
 
     public int countSubstrings(String s) {
-        return build(s, 0);
+        int[] dp = new int[s.length()];
+        Arrays.fill(dp,-1);
+        return build(s, 0,dp);
     }
 }
