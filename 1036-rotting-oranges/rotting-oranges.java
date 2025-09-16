@@ -1,64 +1,63 @@
+class Pair{
+    int idx_1;
+    int idx_2;
+    public Pair(int a,int b){
+        idx_1 = a;
+        idx_2 = b;
+    }
+}
 class Solution {
-    public int orangesRotting(int[][] grid) {
-        int[][] copy = new int[grid.length][grid[0].length];
-        Queue<int[]> queue = new LinkedList();
-        int freshOrange = 0;
-        for(int i=0;i<grid.length;i++){
-            for(int j=0;j<grid[0].length;j++){
-                copy[i][j] = grid[i][j];
-                if(grid[i][j]==2){
-                    queue.add(new int[]{i,j});
-                }
-                if(grid[i][j]==1){
-                    freshOrange++;
-                }
-            }
-        }
+    private int bfs(Queue<Pair> queue,int[][] grid){
         int minutes = -1;
         while(!queue.isEmpty()){
             int size = queue.size();
-            for(int idx=0;idx<size;idx++){
-                int[] a = queue.poll();
-                int i = a[0];
-                int j = a[1];
+            for(int i=0;i<size;i++){
+                Pair pair = queue.poll();
+                int a = pair.idx_1;
+                int b = pair.idx_2;
 
-                if(i-1>=0&&copy[i-1][j]==1){
-                    copy[i-1][j]=2;
-                    queue.add(new int[]{i-1,j});
-                    freshOrange--;
-
+                if(a+1<grid.length&&grid[a+1][b]==1){
+                    grid[a+1][b] = 2;
+                    queue.add(new Pair(a+1,b));
                 }
-                
-                if(j-1>=0&&copy[i][j-1]==1){
-                    copy[i][j-1]=2;
-                    queue.add(new int[]{i,j-1});
-                freshOrange--;
-
+                if(b+1<grid[0].length&&grid[a][b+1]==1){
+                    grid[a][b+1] = 2;
+                    queue.add(new Pair(a,b+1));
                 }
-                
-                if(i+1<copy.length&&copy[i+1][j]==1){
-                    copy[i+1][j]=2;
-                    queue.add(new int[]{i+1,j});
-                freshOrange--;
-
+                if(a-1>=0&&grid[a-1][b]==1){
+                    grid[a-1][b] = 2;
+                    queue.add(new Pair(a-1,b));
                 }
-                if(j+1<copy[0].length&&copy[i][j+1]==1){
-                    copy[i][j+1]=2;
-                    queue.add(new int[]{i,j+1});
-                freshOrange--;
-
+                if(b-1>=0&&grid[a][b-1]==1){
+                    grid[a][b-1] = 2;
+                    queue.add(new Pair(a,b-1));
                 }
-
             }
             minutes++;
         }
-        if(freshOrange==0){
-            return (minutes==-1)?0:minutes;
+
+        return minutes;
+    }
+    public int orangesRotting(int[][] grid) {   
+
+        Queue<Pair> queue = new LinkedList();
+
+        for(int i=0;i<grid.length;i++){
+            for(int j=0;j<grid[0].length;j++){
+                if(grid[i][j]==2){
+                    queue.add(new Pair(i,j));
+                }
+            }
         }
-        return -1;
 
-
-
-
+        int time = bfs(queue,grid);
+                for(int i=0;i<grid.length;i++){
+            for(int j=0;j<grid[0].length;j++){
+                if(grid[i][j]==1){
+                    return -1;
+                }
+            }
+        }
+        return (time==-1)?0:time;
     }
 }
