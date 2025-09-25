@@ -1,18 +1,29 @@
 class Solution {
-    private boolean dfs(int node,Stack<Integer> stack,int[] visited,int[] pathVisited,List<List<Integer>> adj){
-
-        visited[node] = 1;
-        pathVisited[node] = 1;
-        List<Integer> list = adj.get(node);
-        for(int i=0;i<list.size();i++){
-            if(visited[list.get(i)]==1&&pathVisited[list.get(i)]==1)return false;
-            if(visited[list.get(i)]==0&&!dfs(list.get(i),stack,visited,pathVisited,adj)){
-                return false;
-            }
+    int idx = 0;
+    private boolean isCycle(List<List<Integer>> adj,int[] visited,int[] pathVis,int node)
+    {
+        if(visited[node]==1&&pathVis[node]==1){
+            return true;
         }
-        stack.push(node);
-        pathVisited[node] = 0;
-        return true;
+        if(visited[node]==1)return false;
+        visited[node] = 1;
+        pathVis[node] = 1;
+        List<Integer> subAdj = adj.get(node);
+        for(int i=0;i<subAdj.size();i++){
+            if(isCycle(adj,visited,pathVis,subAdj.get(i)))return true;
+        }
+        pathVis[node] = 0;
+
+        return false;
+    }
+    private void topoSort(List<List<Integer>> adj,int node,int[] visited,int[] ans){
+        if(visited[node]==1)return;
+        visited[node] = 1;
+        List<Integer> subAdj = adj.get(node);
+        for(int i=0;i<subAdj.size();i++){
+            topoSort(adj,subAdj.get(i),visited,ans);
+        }
+        ans[idx--] = node;
     }
     public int[] findOrder(int numCourses, int[][] prerequisites) {
         List<List<Integer>> adj = new ArrayList();
@@ -23,21 +34,23 @@ class Solution {
             adj.get(prerequisites[i][1]).add(prerequisites[i][0]);
         }
         int[] visited = new int[numCourses];
-        int[] pathVisited = new int[numCourses];
-        Stack<Integer> stack = new Stack();
-        for(int i=0;i<visited.length;i++){
+        int[] pathVis = new int[numCourses];
+        for(int i=0;i<numCourses;i++){
             if(visited[i]==0){
-                if(!dfs(i,stack,visited,pathVisited,adj)){
-                    return new int[]{};
-                }
+                if(isCycle(adj,visited,pathVis,i))return new int[]{};
             }
         }
-        int[] ans = new int[stack.size()];
-        int idx = 0;
-        while(!stack.empty()){
-            ans[idx++] = stack.pop();
+        Arrays.fill(visited,0);
+        Arrays.fill(pathVis,0);
+        int[] ans = new int[numCourses];
+        idx = ans.length-1;
+        for(int i=0;i<numCourses;i++){
+            if(visited[i]==0){
+                topoSort(adj,i,visited,ans);
+            }
         }
         return ans;
 
+        
     }
 }
