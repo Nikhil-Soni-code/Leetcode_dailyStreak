@@ -1,41 +1,41 @@
 class Solution {
-    private boolean dfs(int node,int[][] graph,int[] visited,int []pathMark,int[] ans){
+    private boolean dfs(List<List<Integer>> adj,int node,int[] visited,int[] pathVis)
+    {
+        if(visited[node]==1&&pathVis[node]==1)return true;
+        if(visited[node]==1)return false;
         visited[node] = 1;
-        pathMark[node] = 1;
-        int[] list = graph[node];
-        for(int i=0;i<list.length;i++){
-            if(visited[list[i]]==1&&pathMark[list[i]]==1){
-                return false;
-            }
-            if (visited[list[i]] == 0) {
-                if (!dfs(list[i], graph, visited, pathMark, ans)) {
-                    return false;
-                }
-            }
-        }
-        ans[node] = 1;
-        pathMark[node] = 0;
-        return true;
+        pathVis[node] = 1;
 
+        List<Integer> subAdj = adj.get(node);
+        for(int i=0;i<subAdj.size();i++){
+            if(dfs(adj,subAdj.get(i),visited,pathVis))return true;
+        }
+        pathVis[node] = 0;
+        return false;
 
     }
     public List<Integer> eventualSafeNodes(int[][] graph) {
+        List<List<Integer>> adj  = new ArrayList();
+        for(int i=0;i<graph.length;i++){
+            adj.add(new ArrayList());
+        }
+        for(int i=0;i<graph.length;i++){
+            for(int j=0;j<graph[i].length;j++){
+                adj.get(i).add(graph[i][j]);
+            }
+        }
         int[] visited = new int[graph.length];
-        int[] pathMark = new int[graph.length];
-        int[] ans = new int[graph.length];
-        for(int i=0;i<visited.length;i++){
+        int[] pathVis = new int[graph.length];
+        for(int i=0;i<graph.length;i++){
             if(visited[i]==0){
-                dfs(i,graph,visited,pathMark,ans);
+                dfs(adj,i,visited,pathVis);
             }
         }
-        List<Integer> finalAns = new ArrayList();
-        for(int i=0;i<ans.length;i++){
-            if(ans[i]==1){
-                finalAns.add(i);
-            }
+        List<Integer> ans = new ArrayList();
+        for(int i=0;i<pathVis.length;i++){
+            if(pathVis[i]==0)
+            ans.add(i);
         }
-        return finalAns;
-
-
+        return ans;
     }
 }
