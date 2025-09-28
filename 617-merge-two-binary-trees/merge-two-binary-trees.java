@@ -14,19 +14,28 @@
  * }
  */
 class Solution {
-    private TreeNode merge(TreeNode root1,TreeNode root2){
-        if(root1==null&&root2==null){
-            return null;
-        }
-        TreeNode root = new TreeNode(0);
-        if(root1!=null)root.val+=root1.val;
-        if(root2!=null)root.val+=root2.val;
-        root.left = merge((root1==null)?root1:root1.left,(root2==null)?root2:root2.left);
-        root.right = merge((root1==null)?root1:root1.right,(root2==null)?root2:root2.right);
-        return root;
-
-    }
     public TreeNode mergeTrees(TreeNode root1, TreeNode root2) {
-        return merge(root1,root2);
+        if(root1==null&&root2==null)return null;
+        int val = 0;
+        if(root1!=null){
+            val+=root1.val;
+        }
+        if(root2!=null){
+            val+=root2.val;
+        }
+        TreeNode newNode = new TreeNode(val);
+        if(root1!=null&&root2!=null){
+            newNode.left = mergeTrees(root1.left,root2.left);
+            newNode.right = mergeTrees(root1.right,root2.right);
+        }
+        else if(root2!=null){
+            newNode.left = mergeTrees(root1,root2.left);
+            newNode.right = mergeTrees(root1,root2.right);
+        }
+        else if(root1!=null){
+            newNode.left = mergeTrees(root1.left,root2);
+            newNode.right = mergeTrees(root1.right,root2);
+        }
+        return newNode;
     }
 }
