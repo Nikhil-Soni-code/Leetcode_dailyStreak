@@ -7,10 +7,8 @@ class Solution {
             while(i<j){
                 if(nums[i]+nums[j]>nums[k]){
                     ans = Math.max(ans,nums[i]+nums[j]+nums[k]);
-                    i++;
-                }else{
-                    i++;
                 }
+                    i++;
             }
         }
         return ans;
