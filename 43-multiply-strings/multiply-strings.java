@@ -13,17 +13,17 @@ class Solution {
             digits[k] = carry;
             idx--;
         }
-        String num = "";
+        StringBuilder num = new StringBuilder();
         int i=0;
         for(i=0;i<digits.length;i++){
             if(digits[i]!=0)break;
         }
         for(int j=i;j<digits.length;j++){
-            num = num+digits[j];
+            num.append(digits[j]);
         }
         if(num.length()==0){
             return "0";
         }
-        return num;
+        return num.toString();
     }
 }
