@@ -1,26 +1,23 @@
 class Solution {
-    private int binarySearch(int[] a,double target){
-        int beg = 0;
-        int end = a.length-1;
+    private int binarySearch(long a,int[] arr,long b){
+        int beg = 0,end = arr.length-1;
         while(beg<=end){
             int mid = beg+(end-beg)/2;
-            if(a[mid]>=target){
+            if(arr[mid]*a>=b){
                 end = mid-1;
-            }
-            else{
+            }else{
                 beg = mid+1;
             }
         }
-        return a.length-beg;
+        return arr.length-beg;
     }
     public int[] successfulPairs(int[] spells, int[] potions, long success) {
-        int[] pairs = new int[spells.length];
         Arrays.sort(potions);
+        int[] ans = new int[spells.length];
         for(int i=0;i<spells.length;i++){
-            double minValue = 1.0*success/spells[i];
-            pairs[i] = binarySearch(potions,minValue);
 
+            ans[i] = binarySearch(spells[i],potions,success);
         }
-        return pairs;
+        return ans;
     }
 }
