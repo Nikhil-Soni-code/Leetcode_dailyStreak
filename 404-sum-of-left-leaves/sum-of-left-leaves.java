@@ -14,20 +14,18 @@
  * }
  */
 class Solution {
-    private int leftLeaf(TreeNode root,String leftOrRight){
+    private int leftLeaf(TreeNode root){
         if(root==null){
             return 0;
         }
-        if(root.left==null&&root.right==null){
-            if(leftOrRight=="left")
-            return root.val;
-        }
-        int left_node = leftLeaf(root.left,"left");
-        int right_node = leftLeaf(root.right,"right");
-        return left_node+right_node;
+        int ans = 0;
+        if(root.left!=null&&root.left.left==null&&root.left.right==null)ans+= root.left.val;
+        int left = leftLeaf(root.left);
+        int right = leftLeaf(root.right);
+        return ans+left+right;
 
     }
     public int sumOfLeftLeaves(TreeNode root) {
-        return leftLeaf(root,"");
+        return leftLeaf(root);
     }
 }
