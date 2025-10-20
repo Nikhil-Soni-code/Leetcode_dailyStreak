@@ -1,22 +1,38 @@
 class MyHashSet {
-    boolean[] hashSet;
+    List<LinkedList<Integer>> set;
+    int M;
     public MyHashSet() {
-        hashSet = new boolean[1000001];
-        Arrays.fill(hashSet,false);
-    }
-    
-    public void add(int key) {
-        if(!contains(key)){
-            hashSet[key] = true;
+        set = new ArrayList();
+        M = 769;
+        for(int i=0;i<M;i++){
+            set.add(new LinkedList<>());
         }
+    }
+    private int hash(int k){
+        return k%M;
+    }
+    public void add(int key) {
+        int idx = hash(key);
+        LinkedList<Integer> list = set.get(idx);
+        if(!list.contains(key)){
+            list.add(key);
+        }
+        
     }
     
     public void remove(int key) {
-        hashSet[key] = false;
+        int idx = hash(key);
+        LinkedList<Integer> list = set.get(idx);
+        if(list.contains(key)){
+            list.remove((Integer)key);
+        }
     }
     
     public boolean contains(int key) {
-        return hashSet[key]!=false;
+        int idx = hash(key);
+        LinkedList<Integer> list = set.get(idx);
+        return list.contains(key);
+          
     }
 }
 
