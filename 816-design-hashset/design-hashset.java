@@ -1,5 +1,5 @@
 class MyHashSet {
-    List<LinkedList<Integer>> set;
+    List<List<Integer>> set;
     int M;
     public MyHashSet() {
         set = new ArrayList();
@@ -13,7 +13,7 @@ class MyHashSet {
     }
     public void add(int key) {
         int idx = hash(key);
-        LinkedList<Integer> list = set.get(idx);
+        List<Integer> list = set.get(idx);
         if(!list.contains(key)){
             list.add(key);
         }
@@ -22,7 +22,7 @@ class MyHashSet {
     
     public void remove(int key) {
         int idx = hash(key);
-        LinkedList<Integer> list = set.get(idx);
+        List<Integer> list = set.get(idx);
         if(list.contains(key)){
             list.remove((Integer)key);
         }
@@ -30,7 +30,7 @@ class MyHashSet {
     
     public boolean contains(int key) {
         int idx = hash(key);
-        LinkedList<Integer> list = set.get(idx);
+        List<Integer> list = set.get(idx);
         return list.contains(key);
           
     }
