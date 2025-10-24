@@ -24,7 +24,7 @@ class Solution {
         Set<String> visited = new HashSet<>();
         visited.add("0,0");
 
-        while (!pq.isEmpty() && ans.size() < k) {
+        while (ans.size() < k) {
             Pair ele = pq.poll();
             ans.add(Arrays.asList(ele.pair[0], ele.pair[1]));
 
