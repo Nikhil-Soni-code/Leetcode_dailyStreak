@@ -1,12 +1,13 @@
 class Solution {
     public int smallestRepunitDivByK(int k) {
-        if (k % 2 == 0 || k % 5 == 0) return -1; // impossible cases
+        if(k%2==0||k%5==0)return -1;
+        int num = 0,count=1;
+        for(int i=0;i<=k;i++){
+            num = (num*10+1)%k;
+            if(num==0)return count;
 
-        int remainder = 0;
-        for (int length = 1; length <= k; length++) { 
-            remainder = (remainder * 10 + 1) % k;
-            if (remainder == 0) return length;
+            count++;
         }
-        return -1; // if never divisible within k steps (pigeonhole principle)
+        return -1;
     }
 }
