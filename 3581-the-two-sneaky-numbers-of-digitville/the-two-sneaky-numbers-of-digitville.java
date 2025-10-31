@@ -17,6 +17,7 @@ class Solution {
             if(nums[i]!=i){
                 ans[idx++] = nums[i];
             }
+            if(idx==2)return ans;
         }
         return ans;
     }
