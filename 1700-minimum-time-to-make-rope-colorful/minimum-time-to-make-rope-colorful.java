@@ -1,44 +1,59 @@
 class Solution {
     public int minCost(String colors, int[] neededTime) {
 
-        // This will store the total cost of removing balloons
+        // Stores the final total cost of removing balloons
         int minCostRequired = 0;
 
-        // This stores the cost for the current group of same-color balloons
+        // Stores the cost for the current continuous group of same-colored balloons
         int cost = 0;
 
-        // Start from index 1 because we compare each balloon with the previous one
+        // Start from index 1 because each balloon is compared with its previous one
         for(int i = 1; i < colors.length(); i++) {
 
-            // If two adjacent balloons have the same color
+            // Check if current balloon has the same color as the previous one
             if(colors.charAt(i) == colors.charAt(i - 1)) {
 
-                // We must remove ONE of them to avoid adjacent duplicates.
-                // Remove the one with the smaller time (cheaper removal).
+                // We must remove one of them to avoid having two same-color balloons side by side.
+                // The cheaper balloon should be removed.
                 cost += Math.min(neededTime[i], neededTime[i - 1]);
 
-                // Important trick:
-                // We want the "remaining" balloon in this chain to always be the most expensive one.
-                // So if current balloon is cheaper than previous, we replace its time with previous.
-                // This keeps neededTime[i] as the *max* of the chain so far.
+                // Explanation of the trick:
+                //
+                // We want to keep ONLY the balloon with the highest removal time (most expensive)
+                // in the current chain.
+                //
+                // Example:
+                // colors: ...bbb
+                // times : [5, 4, 8]
+                //
+                // - Compare 4 with 5 → remove 4, keep 5 (max so far).
+                // - But next we compare with 8. For that comparison, we should compare 8 with "5",
+                //   because 5 is the balloon we kept.
+                //
+                // This means neededTime[i] must always store the MAX time seen in the chain so far.
+                //
+                // If current balloon time < previous balloon time,
+                // the previous balloon is actually the one we are "keeping",
+                // so we overwrite neededTime[i] with that larger value.
                 if(neededTime[i] < neededTime[i - 1]) {
                     neededTime[i] = neededTime[i - 1];
                 }
 
             } else {
-                // If colors differ, the previous "same-color chain" ends here.
-                // Add its accumulated cost.
+
+                // When colors differ, the previous same-color chain ends here.
+                // Add the accumulated cost for that chain.
                 minCostRequired += cost;
 
-                // Reset for next chain
+                // Reset the chain cost for the next group
                 cost = 0;
             }
         }
 
-        // Add the cost of the last chain (if any)
+        // Add cost of the last chain (if it ended at the very last index)
         minCostRequired += cost;
 
-        // Total minimum cost required to remove balloons
+        // Return total minimum cost
         return minCostRequired;
     }
 }
