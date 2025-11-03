@@ -14,20 +14,8 @@
  * }
  */
 class Solution {
-    private int find(TreeNode root){
-        if(root==null)return 0;
-        int leftHeight = 0;
-        int rightHeight = 0;
-        if(root.left!=null){
-            leftHeight = find(root.left);
-        }
-                if(root.right!=null){
-            rightHeight = find(root.right);
-        }
-        return 1+Math.max(leftHeight,rightHeight);
-    }
     public int maxDepth(TreeNode root) {
         if(root==null)return 0;
-        return find(root);
+        return Math.max(maxDepth(root.left),maxDepth(root.right))+1;
     }
 }
