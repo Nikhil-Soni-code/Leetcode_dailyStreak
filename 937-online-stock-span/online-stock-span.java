@@ -1,9 +1,9 @@
 class Pair{
-    int key;
-    int value;
-    public Pair(int key,int value){
-        this.key = key;
-        this.value=value;
+    int val;
+    int prev;
+    public Pair(int val,int prev){
+        this.val = val;
+        this.prev = prev;
     }
 }
 class StockSpanner {
@@ -13,14 +13,13 @@ class StockSpanner {
     }
     
     public int next(int price) {
-        int count=1;
-        while(!stack.isEmpty()&&stack.peek().key<=price){
-            count+=stack.pop().value;
-        }        
-        Pair pair = new Pair(price,count);
-        stack.push(pair);
-        return count;
 
+        int count = 1;
+        while(!stack.isEmpty()&&stack.peek().val<=price){
+            count+=stack.pop().prev;
+        }
+        stack.push(new Pair(price,count));
+        return count;
     }
 }
 
