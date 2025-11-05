@@ -14,21 +14,21 @@
  * }
  */
 class Solution {
-    long min = Long.MIN_VALUE;
-    private boolean isValid(TreeNode root){
-        if(root==null){
-            return true;
-        }
-        boolean left = isValid(root.left);
-        if(!left)return false;
-        if(root.val<=min){
-            return false;
-        }
-        min = root.val;
-        boolean right = isValid(root.right);
-        return right;
+    long prev = Long.MIN_VALUE;
+    private boolean check(TreeNode root){
+        if(root==null)return true;
+        boolean left = check(root.left);
+        if(root.val<=prev)return false;
+        prev = Math.max(prev,root.val);
+        boolean right = check(root.right);
+
+return left&&right;
+
+
+        
     }
     public boolean isValidBST(TreeNode root) {
-        return isValid(root);
+
+        return check(root);
     }
 }
