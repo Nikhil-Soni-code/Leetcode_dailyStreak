@@ -16,42 +16,42 @@ class MyHashMap {
             map.add(new ArrayList());
         }
     }
-    
+    public int hash(int key){
+        return key%M;
+    }
     public void put(int key, int value) {
-        int idx = hash(key);
-        List<Pair> list = map.get(idx);
-        for(Pair pair:list){
-            if(pair.key==key){
-                pair.val = value;
+        int hash = hash(key);
+        List<Pair> subAns = map.get(hash);
+        for(Pair p:subAns){
+            if(p.key==key){
+                p.val = value;
                 return;
             }
         }
-        list.add(new Pair(key,value));
+        Pair newPair =  new Pair(key,value);
+        subAns.add(newPair);
     }
     
     public int get(int key) {
-        int idx = hash(key);
-        List<Pair> list = map.get(idx);
-        for(Pair pair:list){
-            if(pair.key==key){
-                return pair.val;
+        int hash = hash(key);
+        List<Pair> subAns = map.get(hash);
+        for(Pair p:subAns){
+            if(p.key==key){
+                return p.val;
             }
         }
         return -1;
     }
     
     public void remove(int key) {
-        int idx = hash(key);
-        List<Pair> list = map.get(idx);
-        for(Pair pair:list){
-            if(pair.key==key){
-                list.remove(pair);
+        int hash = hash(key);
+        List<Pair> subAns = map.get(hash);
+        for(Pair p:subAns){
+            if(p.key==key){
+                subAns.remove(p);
                 return;
             }
         }
-    }
-    private int hash(int k){
-        return k%M;
     }
 }
 
