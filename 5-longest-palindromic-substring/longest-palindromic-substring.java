@@ -3,22 +3,30 @@ class Solution {
         int maxLength = 1;
         String maxString = ""+s.charAt(0);
         for(int i=1;i<s.length();i++){
-            int j=i-1,k=i+1;
-            while(j>=0&&k<s.length()&&s.charAt(j)==s.charAt(k)){
-                if(maxLength<k-j+1){
-                    maxLength = k-j+1;
-                    maxString = s.substring(j,k+1);
-                }
-                j--;k++;
+            int left = i-1;
+            int right = i+1;
+            int oddLengthCount = 1;
+            while(left>=0 && right<s.length() && s.charAt(left)==s.charAt(right)){
+                oddLengthCount+=2;
+                left--;right++;
             }
-            j=i-1;k=i;
-            while(j>=0&&k<s.length()&&s.charAt(j)==s.charAt(k)){
-                if(maxLength<k-j+1){
-                    maxLength = k-j+1;
-                    maxString = s.substring(j,k+1);
-                }
-                j--;k++;
+            if(maxLength<oddLengthCount){
+                maxLength = oddLengthCount;
+                maxString = s.substring(left+1,right);
             }
+            left = i-1;
+            right = i;
+        
+            int evenLengthCount = 0;
+            while(left>=0 && right<s.length() && s.charAt(left)==s.charAt(right)){
+                evenLengthCount+=2;
+                left--;right++;
+            }
+            if(maxLength<evenLengthCount){
+                maxLength = evenLengthCount;
+                maxString = s.substring(left+1,right);
+            }
+            
         }
         return maxString;
     }
