@@ -8,7 +8,7 @@ class Solution {
 
         for (int i = 0; i < n; i++) {
             if (v.contains(word.charAt(i))) {
-                ans += (long)(i + 1) * (n - i);
+                ans += (long)(i+1)*(n-i);
             }
         }
         return ans;
