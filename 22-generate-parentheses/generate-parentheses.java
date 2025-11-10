@@ -1,25 +1,23 @@
 class Solution {
-    private void generate(List<String> ans,StringBuilder sbr,int openCount,int closeCount,int n){
-        if(openCount==n&&closeCount==n){
-            ans.add(sbr.toString());
+    private void generate(List<String> ans , StringBuilder subAns,int open,int close){
+        if(open==0 && close==0){
+            ans.add(new String(subAns));
             return;
         }
-        if(openCount<n){
-            sbr.append('(');
-            generate(ans,sbr,openCount+1,closeCount,n);
-            sbr.deleteCharAt(sbr.length()-1);
+        if(open>0){
+            subAns.append('(');
+            generate(ans,subAns,open-1,close);
+            subAns.deleteCharAt(subAns.length()-1);
         }
-        if(closeCount<n&&closeCount<openCount){
-            sbr.append(')');
-            generate(ans,sbr,openCount,closeCount+1,n);
-            sbr.deleteCharAt(sbr.length()-1);
+        if(close>0 && open<close){
+            subAns.append(')');
+            generate(ans,subAns,open,close-1);
+            subAns.deleteCharAt(subAns.length()-1);
         }
     }
     public List<String> generateParenthesis(int n) {
         List<String> ans = new ArrayList();
-        StringBuilder sbr = new StringBuilder();
-        sbr.append("(");
-        generate(ans,sbr,1,0,n);
+        generate(ans,new StringBuilder(),n,n);
         return ans;
     }
 }
