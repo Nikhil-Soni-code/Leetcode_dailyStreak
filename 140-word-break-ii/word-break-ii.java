@@ -1,25 +1,22 @@
 class Solution {
-    private void findAllPossibleSentences(List<String> ans,String target,String subAns,int idx,HashSet<String> set){
-        if(idx==target.length()){
+    private void allPossibleSentence(List<String> ans,String subAns,String s,int i,HashSet<String> dict){
+        if(i==s.length()){
             ans.add(subAns.substring(1));
             return;
         }
-        for(int i=idx;i<target.length();i++){
-            String subStr = target.substring(idx,i+1);
-            if(set.contains(subStr)){
-                findAllPossibleSentences(ans,target,subAns+" "+subStr,i+1,set);
+        for(int idx=i;idx<s.length();idx++){
+            if(dict.contains(s.substring(i,idx+1))){
+                allPossibleSentence(ans,subAns+" "+s.substring(i,idx+1),s,idx+1,dict);
             }
         }
     }
     public List<String> wordBreak(String s, List<String> wordDict) {
         List<String> ans = new ArrayList();
-        HashSet<String> set = new HashSet();
-        for(int i=0;i<wordDict.size();i++){
-            set.add(wordDict.get(i));
+        HashSet<String> dict = new HashSet();
+        for(String str:wordDict){
+            dict.add(str);
         }
-        findAllPossibleSentences(ans,s,"",0,set);
+        allPossibleSentence(ans,"",s,0,dict);
         return ans;
-
-
     }
 }
