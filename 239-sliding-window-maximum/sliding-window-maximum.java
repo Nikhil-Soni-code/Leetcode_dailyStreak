@@ -1,33 +1,25 @@
 class Solution {
     public int[] maxSlidingWindow(int[] nums, int k) {
-        int n = nums.length;
-        int[] ans = new int[n-k+1];
-        if(k>n)return ans;
-
         Deque<Integer> deque = new LinkedList();
-        int end=0;
-        while(end<k){
-            while(!deque.isEmpty() && nums[deque.peekLast()]<=nums[end]){
-                System.out.println(nums[deque.peekLast()]);
-                deque.removeLast();
+        for(int i=0;i<k;i++){
+            while(!deque.isEmpty()&&deque.peekLast()<nums[i]){
+                deque.pollLast();
             }
-            deque.addLast(end);
-
-            end++;
+            deque.addLast(nums[i]);
         }
-        int start=0;
-        ans[start]=nums[deque.peekFirst()];
-        while(end<n){
-            if(deque.peekFirst()==start){
-                deque.removeFirst();
+        int[] ans = new int[nums.length-k+1];
+        ans[0] = deque.peekFirst();
+        int j =0;
+        for(int i=k;i<nums.length;i++){
+            if(deque.peekFirst()==nums[j])deque.pollFirst();
+            while(!deque.isEmpty()&&deque.peekLast()<nums[i]){
+                deque.pollLast();
             }
-            start++;
-            while(!deque.isEmpty()&&nums[deque.peekLast()]<=nums[end]){
-                deque.removeLast();
-            }
-            deque.addLast(end);
-            ans[start] = nums[deque.peekFirst()];
-            end++;
+
+            deque.addLast(nums[i]);
+            j++;
+            ans[j] = deque.peekFirst(); 
+
         }
         return ans;
     }
