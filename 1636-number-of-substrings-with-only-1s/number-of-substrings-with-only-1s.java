@@ -1,16 +1,15 @@
 class Solution {
     public int numSub(String s) {
-        int count = 0;
         int i=0,j=0;
+        int count = 0,MOD = 1000000007;
         while(j<s.length()){
-            if(s.charAt(j)!='0'){
+            if(s.charAt(j)=='0'){
+                j++;
                 i=j;
-                while(j<s.length()&&s.charAt(j)!='0'){
-                    count = (count + (j - i + 1)) % 1000000007;
-                    j++;
-                }
+            }else{
+                count=(count+j-i+1)%MOD;
+                j++;
             }
-            j++;
         }
         return count;
     }
