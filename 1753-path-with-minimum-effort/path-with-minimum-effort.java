@@ -13,6 +13,7 @@ class Solution {
             int j = cell[2];
             int effort = cell[0];
             if(effort > distance[i][j])continue;
+            if(i==heights.length-1 && j==heights[0].length-1)return effort;
             if(i>0 && distance[i-1][j] > Math.max(effort,Math.abs(heights[i][j]-heights[i-1][j]))){
                 distance[i-1][j] = Math.max(effort,Math.abs(heights[i][j]-heights[i-1][j]));
                 pq.add(new int[]{distance[i-1][j],i-1,j});
