@@ -1,22 +1,20 @@
 class Solution {
-    private void generate(int[] nums,List<Integer> subAns,List<List<Integer>> ans,int i){
+    private void find(List<List<Integer>> ans,List<Integer> subAns,int[] nums,int i){
         if(i==nums.length){
             ans.add(new ArrayList(subAns));
             return;
         }
-        for(int j=0;j<nums.length;j++){
-            if(!subAns.contains(nums[j])){
-                subAns.add(nums[j]);
-                generate(nums,subAns,ans,i+1);
-                subAns.remove(subAns.size()-1);
-            }
+        for(int j=0;j<=subAns.size();j++){
+            subAns.add(j,nums[i]);
+            find(ans,subAns,nums,i+1);
+            subAns.remove(j);
         }
-
 
     }
     public List<List<Integer>> permute(int[] nums) {
         List<List<Integer>> ans = new ArrayList();
-        generate(nums,new ArrayList(),ans,0);
+        find(ans,new ArrayList(),nums,0);
         return ans;
+
     }
 }
