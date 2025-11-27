@@ -1,23 +1,23 @@
 class Solution {
-    private void combo(List<List<Integer>> ans,List<Integer> subAns,int[] candidates,int i,int target){
+    private void find(List<List<Integer>> ans,List<Integer> subAns,int[] candidates,int target,int i){
+        
         if(target==0){
             ans.add(new ArrayList(subAns));
             return;
         }
-        if(i==candidates.length){
-            return;
-        }
+        if(i==candidates.length)return;
         if(target>=candidates[i]){
             subAns.add(candidates[i]);
-            combo(ans,subAns,candidates,i,target-candidates[i]);
+            find(ans,subAns,candidates,target-candidates[i],i);
             subAns.remove(subAns.size()-1);
         }
-        combo(ans,subAns,candidates,i+1,target);
+        find(ans,subAns,candidates,target,i+1);
 
     }
     public List<List<Integer>> combinationSum(int[] candidates, int target) {
         List<List<Integer>> ans = new ArrayList();
-        combo(ans,new ArrayList(),candidates,0,target);
+        find(ans,new ArrayList(),candidates,target,0);
         return ans;
+
     }
 }
