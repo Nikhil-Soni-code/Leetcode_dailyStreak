@@ -1,34 +1,22 @@
 class Solution {
-    public String decodeAtIndex(String s, int k) {
-
-        long size = 0;                         // must be long
-        for (int i = 0; i < s.length(); i++) {
-            char c = s.charAt(i);
-            if (Character.isDigit(c)) {
-                size *= (c - '0');
-            } else {
+    public String decodeAtIndex(String s, int K) {
+        long size = 0;
+        for(int i=0;i<s.length();i++){
+            if(Character.isDigit(s.charAt(i))){
+                size*=(s.charAt(i)-'0');
+            }else{
                 size++;
             }
         }
+        long k = K;
+        for(int i=s.length()-1;i>=0;i--)
+        {
 
-        long K = k;                            // work with long
-
-        for (int i = s.length() - 1; i >= 0; i--) {
-            char c = s.charAt(i);
-
-            K %= size;                         // safe now
-
-            if (K == 0 && !Character.isDigit(c)) {
-                return "" + c;
-            }
-
-            if (Character.isDigit(c)) {
-                size /= (c - '0');
-            } else {
-                size--;
-            }
+            if(size!=0)k = k%size;
+            if(k==0 && !Character.isDigit(s.charAt(i)))return ""+s.charAt(i);
+            if(Character.isDigit(s.charAt(i)))size = size/(s.charAt(i)-'0');
+            else size--;
         }
-
-        return "" + s.charAt(0);
+        return ""+s.charAt(0);
     }
 }
