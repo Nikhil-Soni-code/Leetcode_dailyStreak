@@ -14,13 +14,13 @@
  * }
  */
 class Solution {
-    private boolean check(TreeNode root,TreeNode left,TreeNode right){
-        if(left==null&&right==null)return true;
-        if(left==null||right==null||left.val!=right.val)return false;
-        return check(root,left.left,right.right)&&check(root,left.right,right.left);
+    private boolean find(TreeNode p,TreeNode q){
+        if(p==null&&q==null)return true;
+        if(p==null||q==null||p.val!=q.val)return false;
+        return find(p.left,q.right) && find(p.right,q.left);
+
     }
     public boolean isSymmetric(TreeNode root) {
-        if(root==null)return false;
-        return check(root,root.left,root.right);
+        return find(root.left,root.right);
     }
 }
