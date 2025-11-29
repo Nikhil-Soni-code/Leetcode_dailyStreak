@@ -14,22 +14,28 @@
  * }
  */
 class Solution {
-    private void generate(TreeNode root,List<String>ans,String s){
+    private void build(List<String> ans,String path,TreeNode root){
         if(root==null){
             return;
         }
-        if(root.left==null&&root.right==null){
-            
-            ans.add(s+root.val);
-            return;
+        if(root.left==null && root.right==null){
+            path = path+root.val;
+            ans.add(path);
         }
-        generate(root.left,ans,s+root.val+"->");
-        generate(root.right,ans,s+root.val+"->");
+        path = path+root.val+"->";
+
+        if(root.left!=null) {
+            build(ans,path,root.left);
+        }
+        if(root.right!=null)
+        {
+            build(ans,path,root.right);
+        }
 
     }
     public List<String> binaryTreePaths(TreeNode root) {
         List<String> ans = new ArrayList();
-        generate(root,ans,"");
+        build(ans,"",root);
         return ans;
     }
 }
