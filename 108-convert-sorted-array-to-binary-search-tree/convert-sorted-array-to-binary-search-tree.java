@@ -14,17 +14,14 @@
  * }
  */
 class Solution {
-    private TreeNode convert(int beg,int[]nums,int end){
-        if(beg>end){
-            return null;
-        }
-        int mid = beg+(end-beg)/2;
-        TreeNode newNode = new TreeNode(nums[mid]);
-        newNode.left = convert(beg,nums,mid-1);
-        newNode.right = convert(mid+1,nums,end);
-        return newNode;
+    private TreeNode convert(int i,int[] nums,int j){
+        if(i>j)return null;
+        int mid = (i+j)/2;
+        TreeNode root = new TreeNode(nums[mid]);
+        root.left = convert(i,nums,mid-1);
+        root.right = convert(mid+1,nums,j);
 
-
+        return root;
     }
     public TreeNode sortedArrayToBST(int[] nums) {
         return convert(0,nums,nums.length-1);
