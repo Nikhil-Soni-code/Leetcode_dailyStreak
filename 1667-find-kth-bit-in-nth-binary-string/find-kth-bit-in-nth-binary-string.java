@@ -7,8 +7,8 @@ class Solution {
             // System.out.println(Si1);
             Si = Si1;
         }
-        k = (k-1)%Si.length();
-        return Si.charAt(k);
+        // k = (k-1)%Si.length();
+        return Si.charAt(k-1);
     }
     private String reverse(String S){
         StringBuilder sbr = new StringBuilder();
