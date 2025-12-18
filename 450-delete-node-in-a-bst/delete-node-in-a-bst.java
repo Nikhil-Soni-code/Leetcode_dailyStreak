@@ -17,28 +17,25 @@ class Solution {
     private TreeNode delete(TreeNode root,int key){
         if(root==null)return null;
         if(root.val == key){
-            return helper(root);
+            TreeNode right = root.right;
+            if(right==null){
+                return root.left;
+            }
+            if(root.left==null)return root.right;
+            TreeNode temp = right;
+            while(temp.left!=null){
+                temp = temp.left;
+            }
+            temp.left = root.left;
+            return right;
         }
-        root.left = delete(root.left,key);
-        root.right = delete(root.right,key);
-
+        if(root.val > key){
+            root.left = delete(root.left,key);
+        }
+        if(root.val < key){
+            root.right = delete(root.right,key);
+        }
         return root;
-    }
-    private TreeNode helper(TreeNode root){
-        if(root.right == null){
-            return root.left;
-        }
-        if(root.left == null){
-            return root.right;
-        }
-        TreeNode leftNode = root.left;
-        TreeNode rightNode = root.right;//newRoot
-        TreeNode temp = rightNode;
-        while(temp.left!=null){
-            temp = temp.left;
-        }
-        temp.left = leftNode;
-        return rightNode;
     }
     public TreeNode deleteNode(TreeNode root, int key) {
         return delete(root,key);
