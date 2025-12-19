@@ -14,28 +14,25 @@
  * }
  */
 class Solution {
-    private TreeNode findLast(TreeNode node){
-        if(node==null)return node;
-        while(node.right!=null){
-            node = node.right;
-        }return node;
-    }
-    private TreeNode bst(TreeNode root){
+    private TreeNode build(TreeNode root){
         if(root==null)return null;
-        TreeNode leftNode = bst(root.left);
-        TreeNode rightNode = bst(root.right);
-        TreeNode leftNodeEndPart = findLast(leftNode);
-        root.left = null;
-        if(leftNodeEndPart!=null){
-            leftNodeEndPart.right = rightNode;
-            root.right = leftNode;
-        }else{
-            root.right = rightNode;
+        TreeNode left = build(root.left);
+        if(left==null){
+            TreeNode right = build(root.right);
+            root.right = right;
+            return root;
+            
         }
+        root.left = null;
+        TreeNode last = left;
         
+        while(last.right != null)last = last.right;
+        TreeNode right = build(root.right);
+        root.right = left;
+        last.right = right;
         return root;
     }
     public void flatten(TreeNode root) {
-        bst(root);
+        build(root);
     }
 }
