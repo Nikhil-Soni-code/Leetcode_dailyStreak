@@ -1,24 +1,21 @@
 class Solution {
-    private int countPalindrome(String s,int i1,int i2,int[][] dp){
-        if(i1==i2)return 1;
-        if(i1>i2)return 0;
-        if(dp[i1][i2]!=-1){
-            return dp[i1][i2];
+    private int findMinInsertions(String s,int i,int j,int[][] dp){
+        if(i>=j){
+            return 0;
         }
-        if(s.charAt(i1)==s.charAt(i2)){
-            dp[i1][i2] = 2+countPalindrome(s,i1+1,i2-1,dp);
-            return dp[i1][i2];
+        if(dp[i][j]!=-1)return dp[i][j];
+        if(s.charAt(i) == s.charAt(j)){
+            dp[i][j] = findMinInsertions(s,i+1,j-1,dp);
+            return dp[i][j];
         }
         else{
-            dp[i1][i2] = Math.max(countPalindrome(s,i1+1,i2,dp),countPalindrome(s,i1,i2-1,dp));
-            return dp[i1][i2];
+            dp[i][j] = 1+Math.min(findMinInsertions(s,i+1,j,dp),findMinInsertions(s,i,j-1,dp));
+            return dp[i][j];
         }
     }
     public int minInsertions(String s) {
-        int[][] dp = new int[s.length()][s.length()];
-        for(int []a:dp){
-            Arrays.fill(a,-1);
-        }
-        return s.length()-countPalindrome(s,0,s.length()-1,dp);
+        int[][]dp = new int[s.length()][s.length()];
+        for(int[]a:dp)Arrays.fill(a,-1);
+        return findMinInsertions(s,0,s.length()-1,dp);
     }
 }
