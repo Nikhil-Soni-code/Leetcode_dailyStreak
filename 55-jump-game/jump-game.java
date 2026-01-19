@@ -1,14 +1,20 @@
 class Solution {
+    private boolean canReach(int[] nums,int i,Boolean[]dp){
+        if(i==nums.length-1)return true;
+        if(dp[i]!=null)return dp[i];
+        int jump = nums[i];
+        for(int k=1;k<=jump;k++){
+            if(canReach(nums,i+k,dp)){
+                dp[i] = true;
+                return true;
+            }
+        }
+        dp[i] = false;
+        return false;
+    }
     public boolean canJump(int[] nums) {
-        int farPoint = 0;
-        if(nums.length==1)return true;
-        for(int i=0;i<nums.length-1;i++){
-            
-            if(farPoint<i)return false;
-            farPoint = Math.max(farPoint,nums[i]+i);
-            if(farPoint>=nums.length-1)return true;
-        }return false;
-
-         
+        Boolean[] dp = new Boolean[nums.length];
+        Arrays.fill(dp,null);
+        return canReach(nums,0,dp);
     }
 }
