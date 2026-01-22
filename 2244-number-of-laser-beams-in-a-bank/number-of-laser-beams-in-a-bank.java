@@ -4,7 +4,6 @@ class Solution {
         for(int i=0;i<bank[0].length();i++){
             if(bank[0].charAt(i)=='1')prevDevice++;
         }
-        System.out.print(prevDevice);
         int ans = 0;
         for(int j=1;j<bank.length;j++){
             String device = bank[j];
@@ -14,7 +13,6 @@ class Solution {
                     currDevice++;
                 }
             }
-        System.out.print(currDevice);
             ans += (prevDevice*currDevice);
             if(currDevice!=0)prevDevice = currDevice;
 
