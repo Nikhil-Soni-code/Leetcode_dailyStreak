@@ -19,15 +19,20 @@ class Solution {
         if(root==null)return 0;
         int left = find(root.left);
         int right = find(root.right);
-        int leftPath = 0,rightPath = 0;
+
         if(root.left!=null && root.left.val == root.val){
-            leftPath = left+1;
+            left++;
+        }
+        else{
+            left=0;
         }
         if(root.right!=null && root.right.val == root.val){
-            rightPath = right+1;
+            right++;
+        }else{
+            right=0;
         }
-        ans = Math.max(ans,leftPath+rightPath);
-        return Math.max(leftPath,rightPath);
+        ans = Math.max(left+right,ans);
+        return Math.max(left,right);
 
 
     }
