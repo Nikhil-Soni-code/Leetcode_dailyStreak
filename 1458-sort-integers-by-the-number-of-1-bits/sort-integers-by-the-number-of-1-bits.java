@@ -1,33 +1,15 @@
 class Solution {
-    private int countSetBits(int ele){
-        int count = 0;
-        while(ele!=0){
-            if((ele&1)==1)count++;
-            ele = ele>>1;
-        }return count;
-    }
-    public int[] sortByBits(int[] nums) {
-        TreeMap<Integer,List<Integer>> map = new TreeMap<>();
-        for(int i=0 ; i<nums.length ; i++){
-            int count = countSetBits(nums[i]);
-            if(map.containsKey(count)){
-                List<Integer> temp = map.get(count);
-                temp.add(nums[i]);
-                map.put(count,temp);
-            }
-            else {
-                List<Integer> temp = new ArrayList<>();
-                temp.add(nums[i]);
-                map.put(count,temp);
-            }
-        }
-        int i = 0;
-        for(Integer key : map.keySet()){
-            List<Integer> list = map.get(key);
-            Collections.sort(list);
-            for(Integer ele : list){
-                nums[i++] = ele;
-            }
-        }return nums;
+    public int[] sortByBits(int[] arr) {
+        Integer[] nums = new Integer[arr.length];
+        for(int i=0 ; i<arr.length ; i++)nums[i] = arr[i];
+        Arrays.sort(nums,(a,b)->{
+            int b1 = Integer.bitCount(a);
+            int b2 = Integer.bitCount(b);
+            if(b1 == b2)return a-b;
+            return b1-b2;
+        });
+        for(int i=0 ; i<arr.length ; i++)arr[i] = nums[i];
+
+return arr;
     }
 }
