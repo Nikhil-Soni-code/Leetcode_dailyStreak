@@ -20,8 +20,8 @@ class Solution {
         long prefix = 0;
 
         for (int i = 0; i < n; i++) {
-            sum = (sum + pos[i] * i - prefix) % MOD;
-            prefix = (prefix + pos[i]) % MOD;
+            sum = (sum-prefix+pos[i]*i) % MOD;
+            prefix = (prefix+pos[i]) %  MOD;
         }
 
         return (int)sum;
