@@ -1,34 +1,18 @@
 class Solution {
-    private boolean check(List<List<Integer>> adj,int prev,int node,int[] visited){
-
-        if(visited[node]!=0){
-            if(visited[node]==prev){
-                return false;
-            }return true;
-        }
-        int color = prev==2?1:2;
-        visited[node] = color;
-        List<Integer> subAdj = adj.get(node);
-        for(int i=0;i<subAdj.size();i++){
-            if(!check(adj,color,subAdj.get(i),visited))return false;
-        }
-        return true;
-
+    private boolean colorIt(int[][] graph , int i, int[] color, int prevColor){
+        if(color[i]==prevColor)return false;
+        if(color[i]!=-1)return true;
+        int currColor = prevColor==1?2:1;
+        color[i] = currColor;
+        for(int j=0 ; j<graph[i].length ; j++){
+            if(!colorIt(graph,graph[i][j],color,currColor))return false;
+        }return true;
     }
     public boolean isBipartite(int[][] graph) {
-        List<List<Integer>> adj = new ArrayList();
-        for(int i=0;i<graph.length;i++){
-            adj.add(new ArrayList());
-            for(int j=0;j<graph[i].length;j++){
-                adj.get(i).add(graph[i][j]);
-            }
-        }
-        int[] visited = new int[graph.length];
-        for(int i=0;i<visited.length;i++){
-            if(visited[i]==0){
-                if(!check(adj,-1,i,visited))return false;
-            }
-        }
-        return true;
+        int[] color = new int[graph.length];
+        Arrays.fill(color,-1);
+        for(int i=0 ; i<graph.length ; i++){
+            if(color[i]==-1&&!colorIt(graph,i,color,-2))return false;
+        }return true;
     }
 }
