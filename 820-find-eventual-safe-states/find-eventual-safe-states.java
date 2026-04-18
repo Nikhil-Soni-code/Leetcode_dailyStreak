@@ -1,41 +1,51 @@
 class Solution {
-    private boolean dfs(List<List<Integer>> adj,int node,int[] visited,int[] pathVis)
-    {
-        if(visited[node]==1&&pathVis[node]==1)return true;
-        if(visited[node]==1)return false;
-        visited[node] = 1;
-        pathVis[node] = 1;
+    private boolean find(List<List<Integer>> adj , Boolean[] memo , int node,boolean[] visited){
+        if(memo[node]!=null)return memo[node];
 
-        List<Integer> subAdj = adj.get(node);
-        for(int i=0;i<subAdj.size();i++){
-            if(dfs(adj,subAdj.get(i),visited,pathVis))return true;
+        if(adj.get(node).size()==0){
+            memo[node] = true;
+            return true;
         }
-        pathVis[node] = 0;
-        return false;
-
+        if(visited[node])return false;
+        visited[node] = true;
+        boolean isEventual = true;
+        for(Integer num : adj.get(node)){
+            if(!find(adj,memo,num,visited)){
+                isEventual = false;
+            }
+        }
+        if(isEventual){
+            memo[node] = true;
+            return true;
+        }
+        else {
+            memo[node] = false;
+            return false;
+        } 
     }
     public List<Integer> eventualSafeNodes(int[][] graph) {
-        List<List<Integer>> adj  = new ArrayList();
-        for(int i=0;i<graph.length;i++){
+        List<Integer> ans = new ArrayList();
+        List<List<Integer>> adj = new ArrayList();
+        for(int i=0 ; i<graph.length ; i++){
             adj.add(new ArrayList());
         }
-        for(int i=0;i<graph.length;i++){
-            for(int j=0;j<graph[i].length;j++){
-                adj.get(i).add(graph[i][j]);
+        for(int i=0 ; i<graph.length ; i++){
+            for(Integer j:graph[i]){
+                adj.get(i).add(j);
             }
         }
-        int[] visited = new int[graph.length];
-        int[] pathVis = new int[graph.length];
-        for(int i=0;i<graph.length;i++){
-            if(visited[i]==0){
-                dfs(adj,i,visited,pathVis);
+        Boolean[] memo = new Boolean[graph.length];
+        boolean[] visited = new boolean[graph.length];
+
+        Arrays.fill(visited,false);
+        Arrays.fill(memo,null);
+        for(int i=0 ; i<graph.length ; i++){
+            if(!visited[i]){
+                find(adj,memo,i,visited);
             }
         }
-        List<Integer> ans = new ArrayList();
-        for(int i=0;i<pathVis.length;i++){
-            if(pathVis[i]==0)
-            ans.add(i);
-        }
-        return ans;
+        for(int i=0 ; i<graph.length ; i++){
+            if(memo[i])ans.add(i);
+        }return ans;
     }
 }
