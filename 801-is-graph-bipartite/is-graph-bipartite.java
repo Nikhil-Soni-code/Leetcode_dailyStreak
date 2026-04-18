@@ -12,7 +12,7 @@ class Solution {
         int[] color = new int[graph.length];
         Arrays.fill(color,-1);
         for(int i=0 ; i<graph.length ; i++){
-            if(color[i]==-1&&!colorIt(graph,i,color,-2))return false;
+            if(!colorIt(graph,i,color,-2))return false;
         }return true;
     }
 }
