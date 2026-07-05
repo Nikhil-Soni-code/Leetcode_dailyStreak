@@ -19,7 +19,8 @@ class Solution {
         String left = find(root.left,map,ans);
         String right = find(root.right,map,ans);
         String str = root.val+","+left+","+right;
-        if(map.containsKey(str) && map.get(str)==1){
+        if(map.containsKey(str)){
+            if(map.get(str)>1)return str;
             ans.add(root);
         }
         map.put(str,map.getOrDefault(str,0)+1);
