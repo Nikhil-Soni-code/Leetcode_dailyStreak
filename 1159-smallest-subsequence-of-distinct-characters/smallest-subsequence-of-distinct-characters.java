@@ -1,25 +1,35 @@
 class Solution {
     public String smallestSubsequence(String s) {
-        boolean[] visited = new boolean[26];
-        int[] lastOccur = new int[26];
-        for(int i=0;i<s.length();i++){
-            lastOccur[s.charAt(i)-'a'] = i;
+        int[] count = new int[26];
+        for(char ch : s.toCharArray()){
+            count[ch-'a']++;
         }
-        Stack<Character> stack = new Stack();
-        for(int i=0;i<s.length();i++){
-            char ch = s.charAt(i);
-            if(!visited[ch-'a']){
-                while(!stack.isEmpty() && stack.peek()>=ch && lastOccur[stack.peek()-'a']>=i){
-                    visited[stack.pop()-'a'] = false;
-                }
-                stack.push(ch);
-                visited[ch-'a'] = true;
-            }
-        }
-        StringBuilder sbr = new StringBuilder();
-        while(!stack.isEmpty()){
-            sbr.insert(0,stack.pop());
-        }return sbr.toString();
 
+        HashSet<Character> set = new HashSet();
+        Stack<Character> stack = new Stack();
+
+        for(char ch : s.toCharArray()){
+
+            count[ch-'a']--;   // CHANGE 1: decrement first
+
+            if(set.contains(ch)) continue; // CHANGE 2
+
+            while(!stack.isEmpty()
+                    && stack.peek() > ch
+                    && count[stack.peek()-'a'] >= 1){
+                set.remove(stack.peek());
+                stack.pop();
+            }
+
+            stack.push(ch);
+            set.add(ch);
+        }
+
+        StringBuilder ans = new StringBuilder();
+        while(!stack.isEmpty()){
+            ans.append(stack.pop());
+        }
+
+        return ans.reverse().toString();
     }
 }
