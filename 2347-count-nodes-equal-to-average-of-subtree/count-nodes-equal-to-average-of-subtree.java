@@ -13,21 +13,30 @@
  *     }
  * }
  */
+ class Ans{
+    int sum;
+    int n;
+    int sol;
+    public Ans(int sum , int n , int sol){
+        this.sum = sum;
+        this.n = n;
+        this.sol = sol;
+    }
+ }
 class Solution {
-    int ans = 0;
-    private int[] find(TreeNode root){
-        if(root==null){
-            return new int[]{0,0};
-        }
-        int[] left = find(root.left);
-        int[] right = find(root.right);
+    
+    private Ans find(TreeNode root){
+        if(root==null)return new Ans(0,0,0);
+        Ans left = find(root.left);
+        Ans right = find(root.right);
 
-        int avg = (root.val+left[0]+right[0])/(1+left[1]+right[1]);
-        if(avg==root.val)ans++;
-        return new int[]{left[0]+right[0]+root.val,1+left[1]+right[1]};
+        int ans = 0;
+        if((left.sum + right.sum + root.val) / (left.n + right.n + 1)==root.val){
+            ans++;
+        }
+        return new Ans(left.sum + right.sum + root.val , left.n + right.n + 1 , ans+left.sol+right.sol);
     }
     public int averageOfSubtree(TreeNode root) {
-        find(root);
-        return ans;
+        return find(root).sol;
     }
 }
