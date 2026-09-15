@@ -4,14 +4,11 @@ class Solution {
         Arrays.sort(people);
         int i=0, j=people.length-1;
         while(i<=j){
-            if(people[i]+people[j]>limit){
-                no++;
-                j--;
-            }else if(people[i]+people[j]<=limit){
-                no++;
+            if(people[i]+people[j]<=limit){
                 i++;
-                j--;
             }
+            no++;
+            j--;
 
         }
         if(i==j)no++;
