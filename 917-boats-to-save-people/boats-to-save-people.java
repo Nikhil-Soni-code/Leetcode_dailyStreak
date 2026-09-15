@@ -4,7 +4,6 @@ class Solution {
         Arrays.sort(people);
         int i=0, j=people.length-1;
         while(i<=j){
-            if(i==j){no++;break;}
             if(people[i]+people[j]>limit){
                 no++;
                 j--;
@@ -14,6 +13,8 @@ class Solution {
                 j--;
             }
 
-        }return no;
+        }
+        if(i==j)no++;
+        return no;
     }
 }
